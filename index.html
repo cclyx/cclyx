@@ -6,6 +6,21 @@
   <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org">
   <style type="text/css">
     /* Color scheme stolen from Sergey Karayev */
+
+    .nivoSlider {   /*轮换图片的大小*/
+    position: relative;
+    width: 780px;
+    height: 400px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.nivoSlider .slide{
+    width: 780px;
+    height: 400px;
+    position: absolute;
+}
+
     
     a {
       color: #1772d0;
@@ -397,7 +412,7 @@
                 
                 <tr>
                   <td width="40%">
-                    <img src="images\2D-slam.png" width="100%">
+                    <img src="images\zuobiao3 2_clip.gif" width="100%">
                   </td>
                   <td width="60%" valign="middle">
                     <div class="title">
@@ -512,6 +527,7 @@
                     </td>
                   </tr>
 
+
                   <!-- <tr>
                     <td width="40%">
                       <img src="3Ddayinji.jpg" width="100%">
@@ -569,6 +585,13 @@
                     </tr>
                   -->
           </table>
+
+
+          
+     
+          
+
+
         <!-- honors and awards -->  
         <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
           <tbody><tr>
@@ -589,8 +612,6 @@
               &bull; 2021 <br>
               <strong> Second Prize</strong> in <strong>The Southwest competition area of the national academic League of Optics and optical engineering doctoral students</strong>
               &bull; 2022 <br>      
-            
-            
             </td>
           </tr>
           </tbody></table>
@@ -603,11 +624,47 @@
               <strong>The First-class Scholarship for Academic Excellence </strong>
               &bull; 2016 &bull; Changchun University of Science and Technology<br>
               <strong>The Second-class Scholarship for Academic Excellence</strong>
-              &bull; 2019 &bull; School of Information and Communication Engineering<br>
+              &bull; 2019 &bull; University of Electronic Science and Technology of China<br>
       
             </td>
           </tr>
           </tbody></table>
+
+          <!-- Acknowledgments -->
+        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+          <tbody><tr>
+            <td width="100%" valign="middle">
+              <heading>Acknowledgments</heading><br>
+              <p ><center><strong>LYX will never forget those who helped him along the way for the rest of his life.</strong> </center></p>
+
+              <br>
+              <img src="images\3Ddayinji.jpg" width="19.4%">
+              <img src="images\guangshe.jpg" width="19.4%">
+              <img src="images\guangjisuo.jpg" width="19.4%">
+              <img src="images\fenxianghui.JPG" width="19.4%">
+              <img src="images\IMG_0058.JPG" width="19.4%">
+
+
+              <br>
+              <img src="images\fenxianghui2.jpg" width="19.4%">
+              <img src="images\little.jpg" width="19.4%">
+              <img src="images\wanglaoshi.jpg" width="19.4%">
+              <img src="images\logo.JPG" width="19.4%">
+              <img src="images\16.JPG" width="19.4%">
+              
+            </td>
+          </tr>
+
+
+          
+          </tbody>
+
+        
+        
+        </table>
+
+
+
         <!-- Education -->
        <script type="text/javascript">
           var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -623,5 +680,67 @@
     </tr>
   </table>
 </body>
+
+
+<script type="text/javascript">
+  onload = function () {
+      var arr = document.getElementsByClassName("slide");
+      for (var i = 0; i < arr.length; i++) {
+          arr[i].style.left = i * 780 + "px";
+      }
+  }
+
+  function LeftMove() {
+      var arr = document.getElementsByClassName("slide");//获取三个子div
+      console.log('进来了');
+      for (var i = 0; i < arr.length; i++) {
+          var left = parseFloat(arr[i].style.left);
+          left -= 2;     //让图片左移2个px
+          console.log("left减后：%s", left);
+          var width = 780;//图片的宽度
+          if (left <= -width) {
+              left = (arr.length - 1) * width;//当图片完全走出显示框，拼接到末尾，因为拼接起来总长度就是(arr.length) * width 但还有一张在显示，所以就减一
+              clearInterval(moveId); //然后停止循环
+          }
+          arr[i].style.left = left + "px";
+      }
+
+  }
+
+  moveId = setInterval(LeftMove, 10);//设置一个10毫秒定时器，并给自己取名, 此时已经能移动
+
+
+  function divInterval() {
+      moveId = setInterval(LeftMove, 10);//设置一个10毫秒定时器
+  }
+
+  timeId = setInterval(divInterval, 5000);//设置一个5秒的定时器。也就是5秒重启一次图片的轮换.要算好之前滑动消耗的时间.
+
+  function stop() {
+      clearInterval(timeId);//鼠标停留关闭B定时器
+      clearInterval(moveId);
+  }
+  function start() {
+      moveId = setInterval(LeftMove, 10);//设置一个10毫秒定时器
+      clearInterval(timeId);//重新打开一个定时前，先关闭之前定时器。
+      timeId = setInterval(divInterval, 5000);//重启一个定时器
+  }
+  // 当浏览器窗口切出或页面切换到其他页面一段时间再回来时，
+  // 轮播效果会有短暂加速（随切出时间加长而加长）。
+  // 主要是因为虽然窗口切出去了，定时器依然在执行，但页面却没有将效果显示，
+  // 所以切回来后会将之前的效果显示出来而加速轮播图。所以添加页面焦点事件：
+  //页面失去焦点定时器停止
+  onblur = function () {
+      stop();
+  }
+  //页面获取焦点时重启定时器
+  onfocus = function () {
+      start();
+  }
+
+</script>
+
+</script>
+
 
 </html>
